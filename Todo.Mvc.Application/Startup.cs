@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using BusinessLayer.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +29,22 @@ namespace Todo.Mvc.Application
             });
 
 
+            
+            // I will use manuel mapper so this is for deleting
+            //var mappingCongig = new MapperConfiguration(mc =>
+            //{
+            //    mc.AddProfile(new MapperProfile());
+            //});
+
+           
+
+           
+
+
+            var conf = Configuration.GetSection("AppSettings");
+            var connectionString = conf["TodoConnectionString"];
+            DiModule.RegisterModule(services, connectionString);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -48,12 +62,13 @@ namespace Todo.Mvc.Application
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Task}/{action=GetAll}/{id?}");
             });
         }
     }

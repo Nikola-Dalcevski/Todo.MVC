@@ -1,8 +1,28 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Domain.Models.User> SignInManager
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (!SignInManager.IsSignedIn(User))
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome To Todo Task Application</h1>
+        <div class="login">
+            <a class="login-link" asp-controller="User" asp-action="Login"><h3>Log In</h3></a>
+            <p>if you have account login.</p>
+        </div>
+
+        <div class="register">
+            <a class="register-link" asp-controller="User" asp-action="Register"><h3>Register</h3></a>
+            <p>if you don't have acount register now.</p>
+        </div>
+    </div>
+}
+else
+{
+
+  
+}
+
+<link href="~/css/MyCustomStyle.css" rel="stylesheet" />

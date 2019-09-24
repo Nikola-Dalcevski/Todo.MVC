@@ -1,0 +1,54 @@
+﻿@model BusinessLayer.ViewModels.SubTaskViewModel
+
+@{
+    ViewData["Title"] = "EditSubTask";
+}
+
+<h1>EditSubTask</h1>
+
+<h4>SubTaskViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditSubTask">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubTodoStatus" class="control-label"></label>
+                <input asp-for="SubTodoStatus" class="form-control" />
+                <span asp-validation-for="SubTodoStatus" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="TaskId" class="control-label"></label>
+                <input asp-for="TaskId" class="form-control" />
+                <span asp-validation-for="TaskId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "GetById", "Task", new { id = Model.TaskId })
+    @*<a asp-action="GetById" asp-controller="Task" >Back to List</a>*@
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

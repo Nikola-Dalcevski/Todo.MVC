@@ -1,0 +1,67 @@
+﻿@model BusinessLayer.ViewModels.TodoTaskViewModel
+
+@{
+    ViewData["Title"] = "GetById";
+    List<SubTaskViewModel> subTasks = ViewBag.SubTasks;
+}
+
+<h1>GetById</h1>
+
+<div>
+    <h4>TodoTaskViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Priority)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Priority)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TodoStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TodoStatus)
+        </dd>
+    </dl>
+</div>
+@if (subTasks.Count() != 0)
+{
+    var vd = ViewBag.SubTask;
+
+   <h3>Sub Tasks</h3>
+    
+    @Html.Partial("_AllSubTask", subTasks) 
+   
+}
+
+   <div>
+       @Html.ActionLink("Create SubTask", "AddSubTask", "SubTask", new { id = Model.Id });<br />
+       <a asp-action="GetAll">Back to List</a> 
+
+
+   </div>
