@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using BusinessLayer.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -45,7 +47,12 @@ namespace Todo.Mvc.Application
             var connectionString = conf["TodoConnectionString"];
             DiModule.RegisterModule(services, connectionString);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options => {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +73,8 @@ namespace Todo.Mvc.Application
 
             app.UseMvc(routes =>
             {
+
+             
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Task}/{action=GetAll}/{id?}");

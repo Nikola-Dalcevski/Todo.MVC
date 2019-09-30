@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "CreateTask";
+    var userId = ViewBag.UserId;
 }
 
 <h1>CreateTask</h1>
@@ -46,6 +47,13 @@
                 <select asp-for="TodoStatus" asp-items="@Html.GetEnumSelectList<Domain.Enumerators.TodoStatus>()"> </select>
                 <span asp-validation-for="TodoStatus" class="text-danger"></span>
             </div>
+            <div class="form-group" hidden>
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" value="@userId" />
+              
+            </div>
+           
+
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -55,7 +63,7 @@
 </div>
 
 <div>
-    <a asp-action="GetAll">Back to List</a>
+    @Html.ActionLink("Back To Tasks", "GetAll", "Task", new { id = ViewBag.UserId})
 </div>
 
 @section Scripts {

@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BusinessLayer;
-using BusinessLayer.Contracts;
+﻿using BusinessLayer.Contracts;
 using BusinessLayer.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Todo.Mvc.Application.Controllers
 {
-    public class UserController : Controller
+    public class UserController : Controller 
     {
         private readonly IUserServices _userServices;
-
-        public UserController(IUserServices userServices)
+        private  static string currentUser;
+      
+        public UserController(IUserServices userServices )
         {
             _userServices = userServices;
+   
         }
 
+        
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
         {
@@ -25,6 +26,7 @@ namespace Todo.Mvc.Application.Controllers
         }
 
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Register(RegisterUserViewModel model)
         {
@@ -32,26 +34,30 @@ namespace Todo.Mvc.Application.Controllers
             return RedirectToAction("GetAll", "Task");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(LoginUserViewModel model)
         {
-            _userServices.LogInUser(model);
-            return RedirectToAction("GetAll", "Task");
+             string userId = _userServices.LogInUser(model);
+            
+            return RedirectToAction("GetAll", "Task", new { id = userId});
         }
 
-
+        [AllowAnonymous]
         public IActionResult Logout()
         {
             _userServices.Logout();
             return RedirectToAction("GetAll", "Task");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetUser(string id)
         {
@@ -59,6 +65,7 @@ namespace Todo.Mvc.Application.Controllers
             return View(user);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetAllUsers()
         {

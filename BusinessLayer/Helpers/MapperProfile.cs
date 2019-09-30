@@ -1,10 +1,6 @@
-﻿using AutoMapper;
-using BusinessLayer.ViewModels;
+﻿using BusinessLayer.ViewModels;
 using DataAccess.Contracts;
 using Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BusinessLayer.Helpers
 {
@@ -42,15 +38,19 @@ namespace BusinessLayer.Helpers
 
         public TodoTask TaskViewModelToTodoTask(TodoTaskViewModel model)
         {
-            var taskType = _typeReposiotry.GetByName(model.Type);
-            return new TodoTask
+
+            int typeId = int.Parse(model.Type);
+            var taskType = _typeReposiotry.GetById(typeId);
+
+            return new TodoTask()
             {
                 Id = model.Id,
                 Title = model.Title,
                 Description = model.Description,
                 Priority = model.Priority,
                 TodoStatus = model.TodoStatus,
-                TaskTypeId = taskType.Id
+                TaskTypeId = taskType.Id,
+                UserId = model.UserId             
             };
         }
         public TodoTaskViewModel TodoTaskToTaskViewModel(TodoTask model)
@@ -63,9 +63,8 @@ namespace BusinessLayer.Helpers
                 Description = model.Description,
                 Priority = model.Priority,
                 TodoStatus = model.TodoStatus,
-                Type = taskType.Title
-                //TODO: need to finis with type hint to call type service metod get type
-
+                Type = taskType.Title,
+                UserId = model.UserId              
             };
         }
 
@@ -77,23 +76,19 @@ namespace BusinessLayer.Helpers
                 Title = model.Title,
                 SubTodoStatus = model.SubTodoStatus,
                 Description = model.Description,
-                TaskId = model.TaskId
-                
-                
+                TaskId = model.TaskId                            
             };
         }
 
         public SubTodoTask ViewSubTaskToSubTask(SubTaskViewModel model)
         {
             return new SubTodoTask
-            {
-                
+            {        
+                Id = model.Id,
                 Title = model.Title,
                 SubTodoStatus = model.SubTodoStatus,
                 Description = model.Description,
                 TaskId = model.TaskId
-                
-
             };
         }
 

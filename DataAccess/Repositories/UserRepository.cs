@@ -1,10 +1,8 @@
 ﻿using DataAccess.Contracts;
 using Domain.Models;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
@@ -51,7 +49,7 @@ namespace DataAccess.Repositories
 
         public int Update(User item)
         {
-            _context.Users.Update(item);
+            _context.Entry(item).State = EntityState.Modified;
             return _context.SaveChanges();
         }
 

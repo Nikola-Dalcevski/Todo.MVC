@@ -4,6 +4,7 @@
 
 
 
+
 @{ if (!SignInManager.IsSignedIn(User))
     {
 
@@ -30,8 +31,10 @@ else
 
     <h1>GetAll</h1>
 
+    
     <p>
-        <a asp-action="CreateTask">Create New</a>
+        @Html.ActionLink("Create Task", "CreateTask", new { id = ViewBag.UserId })
+       
     </p>
     <table class="table">
         <thead>

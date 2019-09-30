@@ -14,5 +14,6 @@ namespace BusinessLayer.ViewModels
         public Priority Priority { get; set; }
         public TodoStatus TodoStatus { get; set; }
         public string Type { get; set; }
+        public string UserId { get; set; } 
     }
 }

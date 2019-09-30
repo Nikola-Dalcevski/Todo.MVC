@@ -1,6 +1,10 @@
 ﻿@model BusinessLayer.ViewModels.SubTaskViewModel
 
-@{var taskId = ViewBag.Taskid;}
+@{
+    ViewData["Title"] = "AddSubTask";
+}
+
+<h1>AddSubTask</h1>
 
 <h4>SubTaskViewModel</h4>
 <hr />
@@ -8,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="AddSubTask">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
+            @*<div class="form-group" >
             <label asp-for="Id" class="control-label"></label>
             <input asp-for="Id" class="form-control" />
             <span asp-validation-for="Id" class="text-danger"></span>
@@ -23,14 +27,15 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group" hidden>
-                <label asp-for="TaskId" class="control-label"></label>
-                <input value="@taskId" asp-for="TaskId" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <select asp-for="SubTodoStatus" asp-items="@Html.GetEnumSelectList<Domain.Enumerators.TodoStatus>()"> </select>
                 <span asp-validation-for="SubTodoStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" hidden>
+                <label asp-for="TaskId" class="control-label"></label>
+                <input type="text" asp-for="TaskId" value="@ViewBag.TaskId" class="form-control" />
+                <span asp-validation-for="TaskId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -40,7 +45,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Back To Tasks", "GetById", "Task", new { id = ViewBag.TaskId})
 </div>
 
 @section Scripts {

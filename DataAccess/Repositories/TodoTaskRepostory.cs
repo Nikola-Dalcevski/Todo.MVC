@@ -1,10 +1,8 @@
 ﻿using DataAccess.Contracts;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DataAccess.Repositories
 {
@@ -45,23 +43,11 @@ namespace DataAccess.Repositories
         }
 
         public int Update(TodoTask item)
-
-
         {
-            var task = _context.Tasks.SingleOrDefault(x => x.Id == item.Id);
-            if(task != null)
-            {
-                task.Title = item.Title;
-                task.TodoStatus = item.TodoStatus;
-                task.TaskType = item.TaskType;
-                task.Priority = item.Priority;
-                task.Description = item.Description;
 
-                return _context.SaveChanges();
-            }
-
-            throw new ArgumentException($"Task with id {item.Id} does not exist");
-           
+            _context.Entry(item).State = EntityState.Modified;
+           return _context.SaveChanges();
+          
         }
     }
 }

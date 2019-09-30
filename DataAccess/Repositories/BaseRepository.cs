@@ -1,6 +1,4 @@
-﻿using Domain;
-
-namespace DataAccess.Repositories
+﻿namespace DataAccess.Repositories
 {
     public class BaseRepository
     {

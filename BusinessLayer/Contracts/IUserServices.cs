@@ -11,8 +11,9 @@ namespace BusinessLayer.Contracts
         UserViewModel GetUserById(string id);
         List<UserViewModel> GetAllUsers();
         void RegisterUser(RegisterUserViewModel model);
-        void LogInUser(LoginUserViewModel model);
+        string LogInUser(LoginUserViewModel model);
         void Logout();
+        UserViewModel GetByEmail(string email);
         
     }
 }

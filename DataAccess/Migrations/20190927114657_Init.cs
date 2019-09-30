@@ -221,19 +221,23 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Types",
-                columns: new[] { "Id", "Title" },
-                values: new object[] { 1, "Work" });
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "89f505ed-834f-458e-89d5-6ca9822023c1", "647d24bc-6084-4c03-9c01-ed3506b4b3bb", "admin", "ADMIN" },
+                    { "90b6e33a-ccfe-4d6b-b495-c8520a7d404d", "73872a4a-d5a4-4f8a-a486-abcbea5b0ec5", "user", "USER" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Types",
                 columns: new[] { "Id", "Title" },
-                values: new object[] { 2, "Personal" });
-
-            migrationBuilder.InsertData(
-                table: "Types",
-                columns: new[] { "Id", "Title" },
-                values: new object[] { 3, "Hobby" });
+                values: new object[,]
+                {
+                    { 1, "Work" },
+                    { 2, "Personal" },
+                    { 3, "Hobby" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

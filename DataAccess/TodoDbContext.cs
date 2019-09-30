@@ -1,6 +1,8 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DataAccess
 {
@@ -45,8 +47,15 @@ namespace DataAccess
                 );
 
 
-           
 
+            string adminRoleId = Guid.NewGuid().ToString();
+            string supplierRoleId = Guid.NewGuid().ToString();
+            string customerRoleId = Guid.NewGuid().ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Id = adminRoleId, Name = "admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Id = supplierRoleId, Name = "user", NormalizedName = "USER" }
+            );
 
         }
 

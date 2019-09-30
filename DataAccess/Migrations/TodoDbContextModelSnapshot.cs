@@ -174,6 +174,22 @@ namespace DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "89f505ed-834f-458e-89d5-6ca9822023c1",
+                            ConcurrencyStamp = "647d24bc-6084-4c03-9c01-ed3506b4b3bb",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "90b6e33a-ccfe-4d6b-b495-c8520a7d404d",
+                            ConcurrencyStamp = "73872a4a-d5a4-4f8a-a486-abcbea5b0ec5",
+                            Name = "user",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

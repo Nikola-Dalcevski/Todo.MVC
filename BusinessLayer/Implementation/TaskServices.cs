@@ -2,11 +2,10 @@
 using BusinessLayer.Helpers;
 using BusinessLayer.ViewModels;
 using DataAccess.Contracts;
-using DataAccess.Repositories;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace BusinessLayer.Implementation
 {
@@ -21,10 +20,11 @@ namespace BusinessLayer.Implementation
             _mapper = mapper;
         }
 
-        public void AddTask(TodoTaskViewModel model)
+        public string AddTask(TodoTaskViewModel model)
         {
             var task = _mapper.TaskViewModelToTodoTask(model);
             _taskRepository.Insert(task);
+            return model.UserId;
         }
 
         public void DeleteTask(int id)
@@ -38,11 +38,12 @@ namespace BusinessLayer.Implementation
             _taskRepository.Update(task);
         }
 
-        public List<TodoTaskViewModel> GetAll()
+        public List<TodoTaskViewModel> GetAll(string id)
         {
             var tasks = _taskRepository.GetAll();
+            var userTasks = tasks.Where(x => x.UserId == id);
             List<TodoTaskViewModel> viewTasks = new List<TodoTaskViewModel>();
-            foreach ( var task in tasks)
+            foreach ( var task in userTasks)
             {
                 viewTasks.Add(_mapper.TodoTaskToTaskViewModel(task));
 
@@ -59,7 +60,6 @@ namespace BusinessLayer.Implementation
                 throw new ArgumentException($"task with id {id} does not exists");
             }
             var viewTask = _mapper.TodoTaskToTaskViewModel(task);
-            //viewTask.Type = _mapper.IntTaskTypeToString(task.TaskType);
             return viewTask;
         }
     }

@@ -1,9 +1,8 @@
 ﻿using DataAccess.Contracts;
 using Domain.Models;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DataAccess.Repositories
 {
@@ -45,7 +44,7 @@ namespace DataAccess.Repositories
 
         public int Update(TodoTaskType item)
         {
-            _context.Types.Update(item);
+            _context.Entry(item).State = EntityState.Modified;
             return _context.SaveChanges();
         }
 

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BusinessLayer.Contracts;
+﻿using BusinessLayer.Contracts;
 using BusinessLayer.Implementation;
 using DataAccess;
 using DataAccess.Contracts;
@@ -7,11 +6,7 @@ using DataAccess.Repositories;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BusinessLayer.Helpers
 {
@@ -19,7 +14,7 @@ namespace BusinessLayer.Helpers
     {
         public static IServiceCollection RegisterModule(IServiceCollection services, string connectionString)
         {
-            //services.AddDbContext<TodoDbContext>(x => x.UseSqlServer(connectionString));
+           
 
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<TodoDbContext>(options =>
@@ -28,14 +23,24 @@ namespace BusinessLayer.Helpers
 
             services.AddTransient<MapperProfile>();
 
-            services.AddIdentity<User, IdentityRole>(opt => {
+            services.AddIdentity<User, IdentityRole>(opt =>
+            {
                 opt.User.RequireUniqueEmail = true;
                 opt.Password.RequireNonAlphanumeric = true;
+                
+
+
+
+
             })
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<TodoDbContext>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<TodoDbContext>();
+           
+                
+            
+                
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepository<TodoTask>, TodoTaskRepository>();

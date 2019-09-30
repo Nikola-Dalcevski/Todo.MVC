@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BusinessLayer.Contracts;
+﻿using BusinessLayer.Contracts;
 using BusinessLayer.Helpers;
 using BusinessLayer.ViewModels;
 using DataAccess.Contracts;
@@ -7,7 +6,6 @@ using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BusinessLayer.Implementation
 {
@@ -43,6 +41,11 @@ namespace BusinessLayer.Implementation
             
         }
 
+        public UserViewModel GetByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserViewModel GetUserById(string id)
         {
             UserExist(id : id);
@@ -52,14 +55,17 @@ namespace BusinessLayer.Implementation
             return viewUser;
         }
 
-        public void LogInUser(LoginUserViewModel model)
+        public string LogInUser(LoginUserViewModel model)
         {
-            UserExist(email: model.Email);
+            
             SignInResult signInResult = _signInManager.PasswordSignInAsync(model.Email, model.Password, true, false).Result;
             if (signInResult.IsNotAllowed)
             {
                 throw new ArgumentException("Email or password are wrong!");
             }
+
+            var user = _userRepository.GetByEmail(model.Email);
+            return user.Id;
 
         }
 
@@ -89,6 +95,7 @@ namespace BusinessLayer.Implementation
 
             LogInUser(new LoginUserViewModel { Email = model.Email, Password = model.Password });
             //_userRepository.Insert(user);
+
             
         }
 
@@ -102,7 +109,7 @@ namespace BusinessLayer.Implementation
             if (email != null) user = _userRepository.GetByEmail(email);
             else user = _userRepository.GetById(id);    
             
-            if (user == null)
+            if (user != null)
             {
                 throw new ArgumentException($"user alredy exists");
             }

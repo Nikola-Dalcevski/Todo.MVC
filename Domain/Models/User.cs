@@ -12,6 +12,7 @@ namespace Domain.Models
         
         public string FirstName { get; set; }
         public string LastName { get; set; }
+       
 
         //navigation properties
         public List<TodoTask> Tasks { get; set; }

@@ -43,7 +43,11 @@
         </dd>
     </dl>
     
+
+    @Model;
     <form asp-action="DeleteSubTask">
+        
+        @Html.HiddenFor(x => x.TaskId)
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         @Html.ActionLink("Back to List", "GetById", "Task", new { id = Model.TaskId })
     </form>
